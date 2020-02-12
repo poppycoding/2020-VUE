@@ -2,7 +2,7 @@
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Vue Basic</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
@@ -31,6 +31,14 @@
         </li>
     </ol>
 </div>
+<div id="app4_1">
+    app4_1:
+    <table border="1">
+        <tr v-for="i in num">
+            <td v-for="j in i">{{j}}*{{i}}={{j*i}}</td>
+        </tr>
+    </table>
+</div>
 <div id="app5">
     <p>
         app5: {{message}}
@@ -56,6 +64,11 @@
                 v-bind:key="item.id"
         ></todo-item>
     </ol>
+</div>
+<div id="app7_1">
+    app7_1:
+    <elijah v-bind:k="v"></elijah>
+
 </div>
 <script>
     var app = new Vue({
@@ -92,6 +105,12 @@
             ]
         }
     });
+    var app4_1 = new Vue({
+        el: '#app4_1',
+        data: {
+            num: 9
+        }
+    });
     var app5 = new Vue({
         el: '#app5',
         data: {
@@ -121,6 +140,17 @@
                 {id: 2, text: '牛奶'},
                 {id: 3, text: '随便人吃的东西'}
             ]
+        }
+    });
+    // 自定义组件标签名,内容
+    Vue.component('elijah', {
+        props: ['k'],
+        template: '<h1>Hello {{k}}</h1>'
+    });
+    var app7_1 = new Vue({
+        el: '#app7_1',
+        data: {
+            v: 'Vue.js'
         }
     });
 </script>

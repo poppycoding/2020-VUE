@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Template Grammar</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值-->
+    <span>Message: {{ msg }}</span>
+
+    <!--html标签不可以直接传值,否则当成字符串解析,需要使用v-html声明-->
+    <p>Using mustaches: {{ rawHtml }}</p>
+    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+
+    <!--数据绑定的大括号不能作用在html attribute,否则当成字符串解析,利用v-bind完成传值绑定-->
+    <!--<div id={{dynamicId}}></div>-->
+    <div v-bind:id="dynamicId">div</div>
+    <span v-bind:title="msg">msg</span>
+
+    <!--无论是哪种传值方式,都支持js表达式,但是只能是单个表达式,不能是语句-->
+    <p>{{dynamicId + 1}}</p>
+    <button v-bind:disabled="isButtonDisabled" @click="dynamicId++">Button</button>
+    <div>{{dynamicId > 5 ? 'good' : dynamicId}}</div>
+
+    <!--冒号就是接收参数-->
+    <a v-bind:href="url">1</a>
+
+    <!--Vue为v-bind和v-on这两个最常用的指令,提供了特定简写-->
+    <!-- 完整语法 -->
+    <a v-bind:href="url">2</a>
+    <!-- 缩写 -->
+    <a :href="url">3</a>
+
+    <!-- 完整语法 -->
+    <button v-on:click="doSomething">do</button>
+    <!-- 缩写 -->
+    <button @click="doSomething">do</button>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: '通过双大括号,完成传值,绑定.',
+            rawHtml: '<span style="color: red">html标签的生效需要v-html渲染</span>',
+            dynamicId: 1,
+            isButtonDisabled: false,
+            url: 'www.google,com'
+        },
+        methods: {
+            doSomething: function () {
+                console.log('@click' + new Date().toLocaleString())
+            }
+        }
+    })
+</script>
+</html>

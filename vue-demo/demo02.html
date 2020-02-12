@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Instance</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{a}}</p>
+</div>
+</body>
+<script>
+    var data = {a: 1, b: null};
+
+    // freeze之后就没法自动渲染了.
+    // Object.freeze(data);
+
+    var app = new Vue({
+        el: '#app',
+        data: data,
+
+        // vue的生命周期钩子,可以添加处理生命周期中的逻辑,eg: created, mounted
+        created: function () {
+            console.log('Vue Created!')
+        }
+
+    });
+    // 双向绑定,值得变化互相影响
+    console.log(data.a === app.a);
+    data.a = 100;
+    console.log(app.a);
+    data.b = 6;
+    console.log(app.b);
+
+    // 未声明的属性,无法渲染,可以提前声明为null等
+    data.c = 10;
+    console.log(data.c !== app.c);
+    console.log('data.c=' + data.c);
+    console.log('app.c=' + app.c);
+    console.log('没有声明的属性,不会自动渲染');
+
+    // vue对象的内置属性$开头
+    console.log(app.$el === document.getElementById('app'));
+    console.log(app.$data === data);
+</script>
+</html>
