@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Class</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="static">这是静态绑定style</div>
+    <br>
+    <div v-bind:class="{dynamic1:flag1, dynamic2:flag2}">dynamic:这是动态属性绑定style</div>
+    <br>
+    <div v-bind:class="dynamicObj">dynamicObj:这是动态对象绑定style</div>
+    <br>
+    <div v-bind:class="dynamicComputeObj">dynamicComputeObj:这是动态对象计算属性绑定style</div>
+    <br>
+    <div v-bind:class="[flag1 ? arr1Class : '', arr2Class]">dynamicArrayObj:这是动态数组绑定style</div>
+    <br>
+    <div v-bind:class="[{arr3:flag1},{arr1:flag1}, arr2Class]">dynamicArrayObj2:这是动态数组对象arr3,1,直接绑定style对象.arr3</div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            // 属性
+            flag1: true,
+            flag2: true,
+
+            // 对象
+            dynamicObj: {
+                obj1: true,
+                obj2: true
+            },
+            // 数组
+            arr1Class: 'arr1',
+            arr2Class: 'arr2'
+        },
+        // 对象计算(常用)
+        computed: {
+            dynamicComputeObj() {
+                // 返回一个对象{}
+                return {
+                    c1: this.flag1,
+                    c2: this.flag2
+                }
+            }
+        }
+    });
+</script>
+</body>
+<style>
+    .static {
+        border: 3px solid darkorange;
+    }
+
+    .dynamic1 {
+        border-bottom: 4px solid aquamarine;
+    }
+
+    .dynamic2 {
+        border-top: 4px solid darkmagenta;
+    }
+
+    .obj1 {
+        border-bottom: 4px solid aquamarine;
+    }
+
+    .obj2 {
+        border-top: 4px solid darkmagenta;
+    }
+
+    .c1 {
+        border-bottom: 4px solid aquamarine;
+    }
+
+    .c2 {
+        border-top: 4px solid darkmagenta;
+    }
+
+    .arr1 {
+        border-bottom: 4px solid aquamarine;
+    }
+
+    .arr2 {
+        border-top: 4px solid darkmagenta;
+    }
+
+    .arr3 {
+        border-left: 4px solid black;
+    }
+</style>
+</html>

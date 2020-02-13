@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Computed Attribute</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>Original message: "{{ msg }}"</p>
+    <p>Reverse expression: "{{ msg.split('').reverse().join('') }}"</p>
+    <p>Computed reverse: "{{ reverseMsg }}"</p>
+    <p>Reverse function: "{{ reverseMsg2() }}"</p>
+</div>
+<br>
+<div id="app2">
+    <p>fullName: "{{ fullName }}"</p>
+    <p>firstName: "{{ firstName }}"</p>
+    <p>lastName: "{{ lastName }}"</p>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: '这是直接通过属性插入值,没有相关计算,假如说需要计算反转,可以直接使用表达式计算展示,但是不建议使用!'
+        },
+        computed: {
+            // 相当于调用计算属性的 getter方法
+            reverseMsg: function () {
+                return this.msg.split('').reverse().join('');
+            },
+        },
+        // 计算属性是基于它们的响应式依赖进行缓存的。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 message 还没有发生改变，
+        // 多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数,而函数方法是每次都要执行,没有缓存可用
+        methods: {
+            reverseMsg2: function () {
+                return this.msg.split('').reverse().join('');
+            }
+        }
+    });
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            firstName: 'Foo',
+            lastName: 'Bar'
+        },
+        // 默认提供了getter方法,可以手动定义setter方法
+        computed: {
+            fullName: {
+                // getter
+                get: function () {
+                    return this.firstName + ' ' + this.lastName;
+                },
+                // setter
+                set: function (newValue) {
+                    var names = newValue.split(' ');
+                    this.firstName = names[0];
+                    this.lastName = names[names.length - 1]
+                }
+            }
+        }
+        // 默认提供的getter方法,可以简写: computed: fullName: function()
+        // 而所有的function方法都可以简写,因此这个getter方法: computed: fullName()
+    })
+</script>
+</body>
+</html>

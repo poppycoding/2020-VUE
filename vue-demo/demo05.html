@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>fullName: "{{ fullName }}"</p>
+    <p>firstName: "{{ firstName }}"</p>
+    <p>lastName: "{{ lastName }}"</p>
+</div>
+<br>
+<div id="app2">
+    <p>fullName: "{{ fName }}"</p>
+</div>
+<script>
+    // 当需要在数据变化时执行异步或开销较大的操作时，建议使用watch作为侦听器
+    var app = new Vue({
+        el: '#app',
+        data: {
+            firstName: 'Foo',
+            lastName: 'Bar',
+            fullName: 'Foo Bar'
+        },
+        watch: {
+            firstName(valF) {
+                this.fullName = valF + ' ' + this.lastName;
+            },
+            lastName(valL) {
+                this.fullName = this.firstName + ' ' + valL;
+            }
+        },
+    });
+    // 侦听属性。当你有一些数据需要随着其它数据变动而变动时,可以使用computed,而不是watch如上所述,watch的代码重复,不建议使用
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            firstName: 'Foo2',
+            lastName: 'Bar2',
+        },
+        computed: {
+            fName() {
+                return this.firstName + ' ' + this.lastName;
+            }
+        }
+    });
+</script>
+</body>
+</html>

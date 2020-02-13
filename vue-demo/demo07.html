@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div style="border: 1px solid aquamarine; color: aquamarine; font-size: 20px">StaticStyle:这是静态内联style</div>
+    <br>
+    <div v-bind:style="{border:border, color: color, fontSize:size + 'px'}">DynamicStyle:这是动态属性内联style</div>
+    <br>
+    <div v-bind:style="DynamicObjStyle">DynamicObjStyle:这是动态对象内联style</div>
+    <br>
+    <div v-bind:style="[DynamicObjStyle,DynamicObjStyle2]">DynamicArrStyle:这是动态数组内联style</div>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            // 属性
+            border: '1px solid aquamarine',
+            color: 'aquamarine',
+            size: '20',
+            // 对象
+            DynamicObjStyle: {
+                border: '1px solid aquamarine',
+                color: 'aquamarine',
+                fontSize: '20px',
+            },
+            // 数组
+            DynamicObjStyle2: {
+                borderLeft: '5px solid black'
+            }
+        },
+    });
+</script>
+</body>
+</html>
