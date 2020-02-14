@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue For</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h3>Vue优化,便于能跟踪每个节点的身份,从而重用和重新排序现有元素,建议为每个元素提供一个唯一key属性,
+        这是Vue识别节点的一个通用机制，key并不仅与v-for特别关联!</h3>
+    <hr>
+    <p>可以用v-for指令基于一个数组来渲染一个列表,v-for:语法格式item in items</p>
+    <ul>
+        <li v-for="item in items" v-bind:key="item.id">
+            {{item.name}}
+        </li>
+    </ul>
+    <hr>
+    <p>在v-for块中可以访问所有父作用域的属性,v-for还支持一个可选的第二个参数,数组下标</p>
+    <ul>
+        <li v-for="(item,index) in items" v-bind:key="index">
+            {{parentValue}} -- {{item.name}} -- {{index}}
+        </li>
+    </ul>
+    <hr>
+    <p>可以用v-for来遍历一个对象的属性,第二个参数可选,代表属性key,第三个可选参数是index</p>
+    <ul>
+        <li v-for="(v,k,i) in obj" v-bind:key="i">
+            {{i}} -- {{k}} -- {{v}}
+        </li>
+    </ul>
+    <hr>
+    <p>变异方法mutation method,原生的js操作数组语法并不能立刻触发渲染,vue支持如下的变异方法触发立刻渲染视图
+        push(), pop(), shift(), unshift(), splice(), sort(), reverse()
+    </p>
+    <p>浏览器控制台用js语法修改books[0]={name:'d',price:1},将不会触发渲染,通过splice(0,1,{name:'d',price:1})则可以</p>
+    <table>
+        <th>name</th>
+        <th>price</th>
+        <tr v-for="book in books" v-bind:key="book.id">
+            <td>{{book.name}}</td>
+            <td>{{book.price}}</td>
+        </tr>
+    </table>
+    <hr>
+    <p>由于JavaScript的限制，如上例子Vue不能检测js改变数组的变动,同样的Vue不能检测对象属性的添加或删除,也就是对于已经创建的实例，
+        Vue不允许动态添加根级别的响应式属性(data中未提前声明的属性),但是可以添加嵌套属性,也即是data中对象Obj中的属性
+        : app.$set(app.obj,'hobby','vue')
+    </p>
+    <ul>
+        <li v-for="(v,k,i) in obj" v-bind:key="i">
+            {{i}} -- {{k}} -- {{v}}
+        </li>
+    </ul>
+    <hr>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            parentValue: 'parent',
+            items: [{name: 'Foo'}, {name: 'Bar'}],
+            obj: {name: 'Elijah', age: 20, gender: 'Male'},
+            books: [{name: 'a', price: 20}, {name: 'b', price: 30}, {name: 'c', price: 10}]
+        }
+    })
+</script>
+</html>

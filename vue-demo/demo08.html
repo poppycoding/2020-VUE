@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue If Show</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>动态控制元素展示:1.通过v-show来控制css的display属性,dom树中一直会有这个元素,当需要频繁切换展示隐藏属性时,选用show</p>
+    <h3 v-show="ok">Hello!</h3>
+    <hr>
+    <p>动态控制元素展示:2.通过v-if来控制移除添加dom元素,开销大一些,当不需要频繁切换展示隐藏属性时,选用if灵活方便</p>
+    <h3 v-if="isAwesome">Vue is awesome!</h3>
+    <h3 v-else>Oh no 😢</h3>
+    <hr>
+    <p>v-if是一个指令，所以必须将它添加到一个元素上,可以通过template元素来控制多个元素,template只是一种标记,并不是一个真的dom元素</p>
+    <template v-if="ok">
+        <h3>Title</h3>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+    </template>
+    <hr>
+    <p>v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别</p>
+    <div v-if="Math.random() > 0.5">
+        Now you see me
+    </div>
+    <div v-else>
+        Now you don't
+    </div>
+    <hr>
+    <p>类似于 v-else，v-else-if 也必须紧跟在带 v-if 或者 v-else-if 的元素之后</p>
+    <div v-if="type === 'A'">
+        A
+    </div>
+    <div v-else-if="type === 'B'">
+        B
+    </div>
+    <div v-else-if="type === 'C'">
+        C
+    </div>
+    <div v-else>
+        Not A/B/C
+    </div>
+    <hr>
+    <p>
+        Vue会尽可能高效地渲染元素，通常会复用(相当于缓存)已有元素而不是从头开始渲染,当元素的key不同时不会复用,切换login时,如果不设置不同的key
+        那么输入框中的值会缓存利用,用的是同一个input,如果设置不同的key,那么就会使用各自的input
+    </p>
+    <template v-if="login === 'username'">
+        <label>username</label>
+        <input type="text" placeholder="please input your username">
+        <label>key:username</label>
+        <input type="text" placeholder="key: please input your username" key="u">
+    </template>
+    <template v-else>
+        <label>email</label>
+        <input type="text" placeholder="please input your email">
+        <label>key:email</label>
+        <input type="text" placeholder="key:please input your email" key="e">
+    </template>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            isAwesome: true,
+            ok: true,
+            type: 'C',
+            login: 'username'
+        }
+    })
+</script>
+</html>
