@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue V-On</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>用 v-on 指令监听 DOM 事件，并在触发时运行一些 JavaScript 代码</p>
+    <button v-on:click="counter += 1">Add</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+    <hr>
+    <p>直接绑定到一个方法</p>
+    <button v-on:click="greet">greet</button>
+    <hr>
+    <p>在内联 JavaScript 语句中调用方法</p>
+    <button v-on:click="say('hi')">Say hi</button>
+    <button v-on:click="say('what')">Say what</button>
+    <hr>
+    <p>keyCode的事件用法已经被废弃了并可能不会被最新的浏览器支持,vue提供了常用的别名,如alt,enter等</p>
+    输入之后,alt+enter会调用: <input v-on:keyup.alt.enter="keydown"/>
+    <hr>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            counter: 0,
+            name: 'Vue'
+        },
+        methods: {
+            greet(event) {
+                alert('Hello' + this.name);
+                // `event` 是原生 DOM 事件
+                if (event) {
+                    alert(event.target.tagName)
+                }
+            },
+            say: function (message) {
+                alert(message)
+            },
+            keydown() {
+                alert('Hello Key down');
+            }
+        }
+    })
+</script>
+</html>

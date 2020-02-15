@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue V-Model</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>v-model指令在表单input,textarea及select元素上创建双向数据绑定</p>
+    <input type="text" v-model="message" placeholder="input your massage">
+    <p>单行文本: {{message}}</p>
+    <hr>
+    <textarea cols="30" rows="10" v-model="multiMsg"></textarea>
+    <p style="white-space: pre-line;">多行文本: {{ multiMsg }}</p>
+    <hr>
+    <input type="checkbox" id="checkbox" v-model="check">
+    <label for="checkbox">单个复选框: {{check}}</label>
+    <hr>
+    <input type="checkbox" id="basketball" value="basketball" v-model="hobby">
+    <label for="basketball">basketball</label>
+    <input type="checkbox" id="football" value="football" v-model="hobby">
+    <label for="football">football</label>
+    <input type="checkbox" id="table ball" value="table ball" v-model="hobby">
+    <label for="table ball">table ball</label>
+    <span>多选复选框: {{ hobby }}</span>
+    <hr>
+    <input type="radio" id="one" value="one" v-model="number">
+    <label for="one">one</label>
+    <input type="radio" id="two" value="two" v-model="number">
+    <label for="two">two</label>
+    <span>单选框: {{ number }}</span>
+    <hr>
+    <select v-model="selected">
+        <option disabled value="">请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <span>单选选择框: {{ selected }}</span>
+    <hr>
+    <select v-model="selected2">
+        <option v-for="o in options" v-bind:value="o.value">
+            {{o.text}}
+        </option>
+    </select>
+    <span>单选选择框For渲染: {{ selected2 }}</span>
+    <hr>
+    <select v-model="selects" multiple>
+        <option disabled value="">请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <span>多选选择框: {{ selects }}</span>
+    <hr>
+    <select v-model="selects2" multiple>
+        <option v-for="o in options" v-bind:value="o.value">
+            {{o.text}}
+        </option>
+    </select>
+    <span>多选选择框For渲染: {{ selects2 }}</span>
+    <hr>
+    <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+    <span>值绑定: {{toggle}}</span>
+    <hr>
+    <p>在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步 ,可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步</p>
+    <input v-model.lazy="msg">
+    <span>输入之后不会立刻显示,需要等鼠标离开点击其他地方之后,发生change事件: {{msg}}</span>
+</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '',
+            multiMsg: '',
+            check: false,
+            hobby: [],
+            number: '',
+            selected: '',
+            selected2: '',
+            options: [
+                {text: 'One', value: 'A'},
+                {text: 'Two', value: 'B'},
+                {text: 'Three', value: 'C'}
+            ],
+            selects: [],
+            selects2: [],
+            toggle: '',
+            msg: ''
+        }
+    })
+</script>
+</html>

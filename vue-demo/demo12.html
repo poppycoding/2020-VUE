@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue V-Component</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <counter></counter>
+    <counter></counter>
+    <hr>
+    <p>通过props传递参数</p>
+    <blog-post title="My journey with Vue"></blog-post>
+    <blog-post title="Blogging with Vue"></blog-post>
+    <blog-post title="Why Vue is so fun"></blog-post>
+    <hr>
+    <p>v-bind 来动态传递 prop 属性</p>
+    <blog-post v-for="p in posts" :key="p.id" :title="p.title"></blog-post>
+    <hr>
+    <p>v-bind 来动态传递 prop 对象</p>
+    <blog2 v-for="post in posts2" v-bind:key="post.id" v-bind:post="post"></blog2>
+    <hr>
+    <p>$emit和父级组件进行沟通,也就是模板文件,调用父级定义的函数属性</p>
+    <div :style="{ fontSize: postFontSize + 'em' }">
+        <blog3 v-for="post in posts2" v-bind:key="post.id" v-bind:post="post"
+               @enlarge-text="postFontSize += 0.1"></blog3>
+    </div>
+    <hr>
+    <p>$emit和父级组件进行沟通,也就是模板文件,调用父级定义的函数属性,模板中的第二个参数是传递给父级元素,$event可以访问到被抛出的这个值(如果是个函数,也可以接收到)</p>
+    <div :style="{ fontSize: postFontSize + 'em' }">
+        <blog3 v-for="post in posts2" v-bind:key="post.id" v-bind:post="post"
+               @enlarge-text="postFontSize += $event"></blog3>
+    </div>
+    <hr>
+    <p>Vue自定义的slot元素,可以像HTML元素一样，直接传递内容到一个组件</p>
+    <alert>Something bad happened.</alert>
+    <hr>
+    <p> Vue的component元素的is属性可以动态选择组件</p>
+    <component v-bind:is="currentTabComponent">控制组件,根据is的属性值: app.currentTabComponent='counter'</component>
+</div>
+</body>
+<script>
+    // 定义一个名为 button-counter 的新组件,data必须为函数
+    // 这里有两种组件的注册类型：全局注册和局部注册。至此，我们的组件都只是通过 Vue.component 全局注册的：
+    Vue.component('counter', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    });
+    Vue.component('blog-post', {
+        props: ['title'],
+        template: '<h3>{{ title }}</h3>'
+    });
+    Vue.component('blog2', {
+        props: ['post'],
+        template: `
+    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+      <div v-html="post.content"></div>
+    </div>`
+    });
+    Vue.component('blog3', {
+        props: ['post'],
+        template: `
+    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+      <button  v-on:click="$emit('enlarge-text',0.5)">
+        Enlarge text
+      </button>
+      <div v-html="post.content"></div>
+    </div>`
+    });
+    Vue.component('alert', {
+        template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>`
+    });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            postFontSize: 1,
+            posts: [
+                {id: 1, title: 'My journey with Vue'},
+                {id: 2, title: 'Blogging with Vue'},
+                {id: 3, title: 'Why Vue is so fun'}
+            ],
+            posts2: [
+                {id: 11, title: 'My journey with Vue'},
+                {id: 22, title: 'Blogging with Vue'},
+                {id: 33, title: 'Why Vue is so fun', content: '<h3>--content</h3>'}
+            ],
+            currentTabComponent: 'alert'
+        }
+    });
+</script>
+</html>
