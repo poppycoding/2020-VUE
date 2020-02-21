@@ -1,23 +1,24 @@
 <!--suppress HtmlUnknownTag -->
 <template>
     <div>
-        <el-form :rules="rules" :model="loginForm" class="loginContent">
+        <el-form :model="loginForm" :rules="rules" class="loginContent" ref="loginForm">
             <h3 class="loginTitle">系统登陆</h3>
             <el-form-item prop="username">
-                <el-input type="text" v-model="loginForm.username" auto-complete="off"
-                          placeholder="请输入用户名"></el-input>
+                <el-input auto-complete="off" placeholder="请输入用户名" type="text" v-model="loginForm.username"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-                <el-input type="text" v-model="loginForm.password" auto-complete="off"
-                          placeholder="请输入密码"></el-input>
+                <el-input auto-complete="off" placeholder="请输入密码" type="text"
+                          v-model="loginForm.password"></el-input>
             </el-form-item>
-            <el-checkbox v-model="checked" class="loginRemember">记住密码</el-checkbox>
-            <el-button style="width: 100%" type="primary">login</el-button>
+            <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>
+            <el-button @click="submitLoginForm" style="width: 100%" type="primary">login</el-button>
         </el-form>
     </div>
 </template>
 
 <script>
+    import {postKVRequest} from "../util/api";
+
     export default {
         name: "Login",
         data() {
@@ -31,6 +32,22 @@
                     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
                     password: [{required: true, message: '请输入密码', trigger: 'blur'}]
                 }
+            }
+        },
+        methods: {
+            submitLoginForm() {
+                this.$refs.loginForm.validate((valid) => {
+                    if (valid) {
+                        postKVRequest('/doLogin', this.loginForm).then(response => {
+                            if (response) {
+                                console.log(response)
+                            }
+                        })
+                    } else {
+                        this.$message.error('请输入用户名和密码!');
+                        return false;
+                    }
+                });
             }
         }
     }
