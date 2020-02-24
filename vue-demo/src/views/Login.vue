@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import {postKVRequest} from "../util/api";
+    /// import {postKVRequest} from "../util/api";不再导入,通过Vue.prototype封装插件,通过this.调用
 
     export default {
         name: "Login",
@@ -38,9 +38,13 @@
             submitLoginForm() {
                 this.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        postKVRequest('/doLogin', this.loginForm).then(response => {
+                        this.postKVRequest('/doLogin', this.loginForm).then(response => {
                             if (response) {
-                                console.log(response)
+                                // 存到当前页面的session中,关闭页面就会清空
+                                window.sessionStorage.setItem('user', JSON.stringify(response))
+
+                                // 页面跳转:replace是浏览者器中不带后退的功能,push是带后退的功能
+                                this.$router.replace('/home')
                             }
                         })
                     } else {

@@ -43,3 +43,33 @@ export const postKVRequest = (url, params) => {
         }
     })
 }
+// json参数请求封装: post, put, delete, get
+export const postRequest = (url, params) => {
+    return Axios({
+        method: 'post',
+        url: `${base}${url}`,
+        data: params,
+    })
+}
+export const putRequest = (url, params) => {
+    return Axios({
+        method: 'put',
+        url: `${base}${url}`,
+        data: params,
+    })
+}
+export const getRequest = (url, params) => {
+    return Axios({
+        method: 'get',
+        url: `${base}${url}`,
+        data: params,
+    })
+}
+export const deleteRequest = (url, params) => {
+    return Axios({
+        method: 'delete',
+        url: `${base}${url}`,
+        data: params,
+    })
+}
+// 可以通过export语法在调用出导入使用这些方法;也可以在main.js一次性导入,封装成一个vue插件,以Vue.prototype插件形式通过this.方法全局使用
