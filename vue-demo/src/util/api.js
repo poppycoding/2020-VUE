@@ -5,17 +5,23 @@ import Message from "element-ui/packages/message/src/main";
 Axios.interceptors.response.use(success => {
 
     // 存在status,如果http响应为200,但是后端封装的data中的status属性为500,就展示后端的错误信息
-    if (success.status && success.status === 200 && success.data.status === 500) {
-        Message.error({message: success.data.msg})
+    if (success.status && success.status === 200 && success.data.code === 500) {
+        Message.error({message: success.data.message})
         return;
     }
+
+    // 成功如果有消息弹窗提示
+    if (success.data.message) {
+        Message.success({message: success.data.message})
+    }
+
     return success.data;
 }, error => {
     // http状态码不等于200的处理逻辑
     if (error.response.status === 404 || error.response.status === 504) {
         Message.error({message: '服务异常!'})
-    } else if (error.response.data.msg) {
-        Message.error({message: error.response.data.msg})
+    } else if (error.response.data.message) {
+        Message.error({message: error.response.data.message})
     } else {
         Message.error({message: '未知错误!'})
     }
