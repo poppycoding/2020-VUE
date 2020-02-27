@@ -18,8 +18,28 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-header>
-            <el-main>Main</el-main>
-            <el-footer>Footer</el-footer>
+            <el-container>
+                <el-aside width="200px">
+                    <!--原生实现二级菜单的路径跳转,indexPath就是二级的index值,element支持router直接自动实现跳转功能-->
+                    <!--<el-menu @select="menuClick">+ this.$router.push(indexPath)-->
+                    <el-menu router>
+                        <!--v-if-for不可以同时使用,需要修改"allowUsingIterationVar":为true-->
+                        <!--<el-submenu :key="pIndex" index="1" v-for="(parent,pIndex) in this.$router.options.routes" v-if="parent.isNavigation">-->
+                        <el-submenu :key="pIndex" index="1" v-for="(parent,pIndex) in navigations">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>{{parent.name}}</span>
+                            </template>
+                            <el-menu-item :index="child.path" :key="cIndex" v-for="(child,cIndex) in parent.children">
+                                {{child.name}}
+                            </el-menu-item>
+                        </el-submenu>
+                    </el-menu>
+                </el-aside>
+                <el-main>
+                    <router-view/>
+                </el-main>
+            </el-container>
         </el-container>
     </div>
 </template>
@@ -30,6 +50,13 @@
         data() {
             return {
                 user: JSON.parse(window.sessionStorage.getItem('user'))
+            }
+        },
+        computed: {
+            navigations() {
+                return this.$router.options.routes.filter(function (nav) {
+                    return nav.isNavigation
+                })
             }
         },
         methods: {
