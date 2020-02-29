@@ -1,11 +1,10 @@
 <template>
-    <div>t2</div>
-
+    <div>员工调动</div>
 </template>
 
 <script>
     export default {
-        name: "t2"
+        name: "PerMv"
     }
 </script>
 

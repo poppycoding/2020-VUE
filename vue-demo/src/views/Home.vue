@@ -9,7 +9,7 @@
                 </div>
                 <el-dropdown @command="handleCommand" class="user">
                     <span class="el-dropdown-link">{{user.name}}
-                        <i><img :src="user.userface" alt=""></i>
+                        <i><img :src="user.avatar" alt=""></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="info">个人中心</el-dropdown-item>
@@ -22,10 +22,11 @@
                 <el-aside width="200px">
                     <!--原生实现二级菜单的路径跳转,indexPath就是二级的index值,element支持router直接自动实现跳转功能-->
                     <!--<el-menu @select="menuClick">+ this.$router.push(indexPath)-->
-                    <el-menu router>
+                    <!-- unique-open控制只打开一级,但是需要index不同,同时为字符串,所以下面index+''转为字符串 -->
+                    <el-menu router unique-opened>
                         <!--v-if-for不可以同时使用,需要修改"allowUsingIterationVar":为true-->
                         <!--<el-submenu :key="pIndex" index="1" v-for="(parent,pIndex) in this.$router.options.routes" v-if="parent.isNavigation">-->
-                        <el-submenu :key="pIndex" index="1" v-for="(parent,pIndex) in navigations">
+                        <el-submenu :index="pIndex+''" :key="pIndex" v-for="(parent,pIndex) in navigations">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
                                 <span>{{parent.name}}</span>
@@ -54,9 +55,7 @@
         },
         computed: {
             navigations() {
-                return this.$router.options.routes.filter(function (nav) {
-                    return nav.isNavigation
-                })
+                return this.$store.state.routes;
             }
         },
         methods: {

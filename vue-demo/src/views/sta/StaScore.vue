@@ -1,10 +1,10 @@
 <template>
-    <div>t1</div>
+    <div>员工积分统计</div>
 </template>
 
 <script>
     export default {
-        name: "t1"
+        name: "StaScore"
     }
 </script>
 
