@@ -7,7 +7,8 @@
                 <el-input auto-complete="off" placeholder="请输入用户名" type="text" v-model="loginForm.username"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-                <el-input auto-complete="off" placeholder="请输入密码" type="text"
+                <!--在password中输入enter调用登陆,这里因为是element-ui所以需要使用native-->
+                <el-input @keydown.enter.native="submitLoginForm" auto-complete="off" placeholder="请输入密码" type="text"
                           v-model="loginForm.password"></el-input>
             </el-form-item>
             <el-checkbox class="loginRemember" v-model="checked">记住密码</el-checkbox>

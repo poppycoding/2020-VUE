@@ -14,13 +14,8 @@ const routes = [
         path: '/home',
         name: 'Home',
         component: Home,
-    }, {
-        path: '/home',
-        name: '导航',
-        component: Home,
-        isNavigation: true,
-        children: []
     }
+    // 静态写死导航栏数据: {path: '/home', name: '导航', component: Home, isNavigation: true, children: []}
 ]
 
 const router = new VueRouter({
