@@ -113,6 +113,54 @@ npm run build
 npm run lint
 ```
 
+
+
+
+
+### 安装其他依赖
+- element-ui库
+```npm
+npm install element-ui
+
+```
+main.js中import:
+
+import ElementUI from 'element-ui'
+
+import 'element-ui/lib/theme-chalk/index.css'
+
+---
+- axios网路请求工具
+```npm
+npm install axios
+
+```
+api.js中import:
+
+import Axios from "axios"
+
+---
+- vuex缓存
+```npm
+npm install vuex
+```
+store.js中import:
+
+import Vuex from 'vuex'
+
+---
+- font-awesome图标库
+```npm
+npm install font-awesome
+```
+main.js中import:
+
+import 'font-awesome/css/font-awesome.min.css'
+
+
+
+
+
 ### Reference
 
 - [Vue](https://cli.vuejs.org/)
