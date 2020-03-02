@@ -41,7 +41,7 @@ export const transformToRoutes = (menus) => {
                     require(['../views/' + path.split('/')[1] + '/' + component + '.vue'], resolve);
                 }
             }
-            // 也可以使用import动态加载组件,但是好像不支持加if-else判断???
+            // 也可以使用import动态加载组件,但是好像不支持加if-else判断 ???
             // component: () => import('../views/' + path.split('/')[1] + '/' + component + '.vue')
         }
         formatRoutes.push(formatRoute);

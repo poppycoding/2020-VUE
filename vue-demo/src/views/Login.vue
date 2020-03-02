@@ -44,8 +44,13 @@
                                 // 存到当前页面的session中,关闭页面就会清空
                                 window.sessionStorage.setItem('user', JSON.stringify(response.data))
 
+                                // 登陆成功正常是直接访问home页,如果用户登陆之前访问了其他页面,我们在全局导航守卫中记录并传入这个wantGo参数,
+                                // 登陆完成直接跳转,如果本来直接访问的就是登陆页面或者home页面,则仍然是跳转到home
+                                let wantGo = this.$route.query.wantGo;
+                                let endGo = wantGo === '/' || wantGo === undefined ? '/home' : wantGo;
+
                                 // 页面跳转:replace是浏览者器中不带后退的功能,push是带后退的功能
-                                this.$router.replace('/home')
+                                this.$router.replace(endGo)
                             }
                         })
                     } else {

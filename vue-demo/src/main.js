@@ -24,9 +24,13 @@ Vue.use(ElementUI);
 router.beforeEach((to, from, next) => {
     if (to.path === '/') {
         next();
-    } else {
+        // 当登录之后才能请求菜单(请求后端接口),否则直接跳转到登录页面,防止权限不足,后端返回错误消息,影响用户体验
+    } else if (window.sessionStorage.getItem('user')) {
         initMenu(router, store);
         next();
+    } else {
+        // 记录未登录请求的路径to,然后跳转到登陆页面,同时把路径封装成query的路径参数,在登陆完成的时候,判断如果有这个参数,则在登陆完成后直接访问这个页面
+        next('/?wantGo=' + to.path)
     }
 })
 
