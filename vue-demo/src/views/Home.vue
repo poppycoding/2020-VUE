@@ -48,7 +48,7 @@
                     <div class="welcome" v-if="this.$router.currentRoute.path==='/home'">
                         欢迎使用微人事系统!
                     </div>
-                    <router-view/>
+                    <router-view style="margin-top: 10px"/>
                 </el-main>
             </el-container>
         </el-container>
