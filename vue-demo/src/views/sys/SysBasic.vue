@@ -33,7 +33,7 @@
         name: "SysBasic",
         data() {
             return {
-                activeName: 'position'
+                activeName: 'permission'
             }
         },
         // key:value,如果key和value一样可以省略

@@ -40,7 +40,7 @@
                     </el-menu>
                 </el-aside>
                 <el-main>
-                    <el-breadcrumb separator-class="el-icon-arrow-right"
+                    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-bottom: 10px"
                                    v-if="this.$router.currentRoute.path!=='/home'">
                         <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
                         <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>

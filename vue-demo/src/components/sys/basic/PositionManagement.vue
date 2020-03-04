@@ -72,6 +72,7 @@
                 this.getRequest("/sys/basic/positions").then(response => {
                     if (response.data) {
                         this.data = response.data;
+                        this.position.name = ''
                     }
                 })
             },
@@ -147,7 +148,7 @@
                     });
                 });
             }
-        },
+        }
     }
 </script>
 
