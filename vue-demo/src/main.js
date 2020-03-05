@@ -23,7 +23,8 @@ Vue.prototype.deleteRequest = deleteRequest;
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI);
+// 全局设置element的空间的大小,如果局部需要修改,局部的优先级更高
+Vue.use(ElementUI, { size: "small" });
 
 // https://router.vuejs.org/zh/guide/advanced/navigation-guards.html
 // 全局前置守卫,类似于后端拦截器,当发生路由跳转时进行初始化菜单,防止用户f5刷新菜单栏消失
