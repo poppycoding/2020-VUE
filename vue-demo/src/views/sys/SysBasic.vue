@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-tabs type="card" v-model="activeName">
-      <el-tab-pane label="部门管理" name="dev">
+      <el-tab-pane label="部门管理" name="dep">
         <depManagement></depManagement>
       </el-tab-pane>
       <el-tab-pane label="职位管理" name="position">
@@ -34,7 +34,7 @@ export default {
   name: "SysBasic",
   data() {
     return {
-      activeName: "permission"
+      activeName: "dep"
     };
   },
   // key:value,如果key和value一样可以省略
