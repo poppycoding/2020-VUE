@@ -108,7 +108,7 @@ export default {
     handleSave() {
       this.postRequest("/sys/basic/roles", this.role).then(response => {
         if (this.role.name && this.role.chineseName) {
-          if (response.data) {
+          if (response.code === 200) {
             this.listRoles();
           }
         } else {
@@ -167,7 +167,7 @@ export default {
       let checkedMenuIds = selectTree.getCheckedKeys(true);
       this.putRequest("/sys/basic/roles/" + rid, checkedMenuIds).then(
         response => {
-          if (response.data) {
+          if (response.code === 200) {
             this.activeName = -1;
           }
         }

@@ -7,15 +7,8 @@ Axios.interceptors.response.use(
   success => {
     // 存在status,如果http响应为200,但是后端封装的data中的status属性为500,就展示后端的错误信息
     if (success.status && success.status === 200) {
-      if (
-        success.data.code === 500 ||
-        success.data.code === 400 ||
-        success.data.code === 401
-      ) {
+      if (success.data.code === 500 || success.data.code === 400) {
         Message.error({ message: success.data.message });
-        if (success.data.code === 401) {
-          router.replace("/");
-        }
         return;
       }
     }
@@ -27,12 +20,13 @@ Axios.interceptors.response.use(
   },
   error => {
     // http状态码不等于200的处理逻辑
-    if (
-      error.response.status === 404 ||
-      error.response.status === 503 ||
-      error.response.status === 504
-    ) {
+    if (error.response.status === 404 || error.response.status === 504) {
       Message.error({ message: "服务异常!" });
+    } else if (error.response.status === 401) {
+      Message.error({ message: "认证失败,请重新登陆!" });
+      router.replace("/");
+    } else if (error.response.status === 403) {
+      Message.error({ message: "权限不足,请联系管理员处理!" });
     } else if (error.response.data.message) {
       Message.error({ message: error.response.data.message });
     } else {
